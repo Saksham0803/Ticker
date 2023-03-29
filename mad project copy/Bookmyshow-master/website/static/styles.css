@@ -38,21 +38,22 @@ nav .container {
 }
 
 .search-bar {
-  background-color: hsl(252, 30%, 95%);
+  background-color: #fccc74;
   border-radius: 2rem;
   padding: 0.6rem 2rem;
 }
 
 .search-bar input[type="search"] {
   background: transparent;
-  width: 30vw;
+  width: 37vw;
   margin-left: 1rem;
   font-size: 0.9rem;
-  color: hsl(252, 30%, 17%);
+  font-weight: 700;
+  color: #d8bcb8;
 }
 
 nav .search-bar input[type="search"]::placeholder {
-  color: hsl(252, 15%, 65%);
+  color: #6c8ca4;
 }
 
 nav .create {
@@ -95,11 +96,11 @@ nav .create {
 }
 
 .card {
-  margin: 30px auto;
+  margin: 30px 20px;
   width: 225px;
-  height: 300px;
+  height: 320px;
   border-radius: 40px;
-  box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
+  box-shadow: rgb(85, 91, 255) 0px 0px 0px 3px, rgb(31, 193, 27) 0px 0px 0px 6px, rgb(255, 217, 19) 0px 0px 0px 9px, rgb(255, 156, 85) 0px 0px 0px 12px, rgb(255, 85, 85) 0px 0px 0px 15px; 
   cursor: pointer;
   transition: 0.4s;
   margin-bottom: 90px;
@@ -135,7 +136,7 @@ nav .create {
   transform: scale(0.99, 0.99);
 }
 
-@media all and (max-0.99idth9: 500px) {
+@media all and (max-width: 500px) {
   .card-list {
     /* On small screens, we are no longer using row direction but column */
     flex-direction: column;
@@ -152,8 +153,8 @@ nav .create {
 }
 
 .footer_logo{
-  height: 5rem;
-  width: 5rem;
+  height: 100px;
+  width: 50px;
 }
 
 html {
@@ -175,8 +176,8 @@ body {
   display: flex;
   flex-flow: row wrap;
   padding: 30px 30px 20px 30px;
-  color: #2f2f2f;
-  background-color: #fff;
+  color: #efefef;
+  background-color: 		#272727;
   border-top: 1px solid #e5e5e5;
 }
 
@@ -255,7 +256,7 @@ body {
 }
 
 .nav__ul a {
-  color: #999;
+  color: #473d3d;
 }
 
 .nav__ul--extra {
