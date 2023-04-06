@@ -95,8 +95,9 @@ Home
       <div class="card">
           <div class="card_image"> <a href="/select_theaters/{{ movie.id }}" class="card_image"> <img src="/static/movie_posters/{{ movie.poster }} "/></a> </div>
         <a href="/select_theaters/{{ movie.id }}" class="link-dark"><div class="card_title" style="padding-bottom:10px">
-              <p>{{ movie.title }},  rating - {{ movie.rating }}</p>
+              <p>{{ movie.title }}</p>
         </div>
+            <div class="card_title"> rating - {{ movie.rating }}  </div>
           <div class="card_title"> Genre - {{ movie.Genre }}  </div></a>
       </div>
      {% endfor %}
