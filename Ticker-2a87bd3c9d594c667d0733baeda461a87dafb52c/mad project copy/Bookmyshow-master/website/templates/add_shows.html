@@ -1,0 +1,120 @@
+{% extends "base.html" %} 
+
+{% block title %} 
+Add Show 
+{% endblock %}
+
+{% block content %}
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" style="font-weight: 1000; font-family: 'Poppins', sans-serif;color:rgb(192, 25, 192)" href="#">Ticker</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse d-md-flex justify-content-md-end" id="navbarNavDropdown">
+        <ul class="navbar-nav navbar-nav mr-auto">
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+            {% if user.is_admin %}
+                <a class="nav-link" href="/my_theaters">Theater</a>
+                <a class="nav-link" href="movies">Movies</a>
+            </li>
+            {% else %}
+            <a class="nav-link" href="my_tickets">My Tickets</a>
+            {% endif %}
+            {% endif %}
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {% if user.is_admin %}
+                {{ user.name }}, Admin
+                {% else %}
+                {{ user.name }}
+                {% endif %}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="nav-link" href="/logout">Logout</a></li>
+            </ul>
+            </li>
+            {% else %}
+            <li class="nav-item justify-content-end">
+            <a class="nav-link" href="/login">Login</a>
+            </li>
+            {% endif %}
+        </ul>
+        </div>
+    </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    {% if category == 'error' %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% elif category == 'success' %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% elif category == 'warning' %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% elif category == 'note' %}
+    <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+<h3 style="display: flex; justify-content: center;align-items: center;padding-top:5%; font-weight:700">Add Show</h3>
+<div class="form" style="display: flex; justify-content: center;align-items: center;padding-top:10px;padding-bottom:70px">
+<form method = "POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label class="form-label">Movie</label>  <!-- for="exampleDataList" -->
+        <select class="form-select" aria-label="Select Theater" name="movie">
+            {% for movie in movies %}
+            <option value="{{ movie.title }}">{{ movie.title }}</option>
+            {% endfor %} 
+          </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Theater</label>   <!--  for="t" -->
+        <select class="form-select" aria-label="Select Theater" name="t_in">
+            {% for theaters in user.theater %}
+            <option value="{{ theaters.id}}">{{ theaters.name }}</option>
+            {% endfor %}
+          </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">No of seats</label>      <!--   for="available_seat" -->
+        <input type="number" class="form-control" placeholder="Enter the total number of seats" name="available_seats" min="0" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Cost per seat</label>     <!--   for="cost" -->
+        <input type="number" class="form-control" placeholder="cost for 1 seat" name="cost" min="0" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Select Date Time</label>
+        <input type="datetime-local" class="form-control" name="date_time" required>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary ">Add Show</button>
+</form>
+</div>
+{% endblock %}
