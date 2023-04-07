@@ -1,0 +1,116 @@
+{% extends "base.html" %} 
+
+{% block title %} 
+Home 
+{% endblock %}
+
+{% block content %}
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" style="font-weight: 1000; font-family: 'Poppins', sans-serif" href="/">Ticker</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse d-md-flex justify-content-md-end" id="navbarNavDropdown">
+      <ul class="navbar-nav navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="/">Home</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          {% if user.is_admin %}
+            <a class="nav-link" href="/my_theaters">Theater</a>
+            <a class="nav-link" href="/movies">Movies</a>
+        </li>
+        {% else %}
+        <a class="nav-link" href="/my_tickets">My Tickets</a>
+        {% endif %}
+        {% endif %}
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {% if user.is_admin %}
+              {{ user.name }}, Admin
+            {% else %}
+              {{ user.name }}
+            {% endif %}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="nav-link" href="/logout">Logout</a></li>
+          </ul>
+        </li>
+        {% else %}
+        <li class="nav-item justify-content-end">
+          <a class="nav-link" href="/login">Login</a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+ <!-- Flash Messages -->
+ {% with messages = get_flashed_messages(with_categories=true) %}
+ {% if messages %}
+ {% for category, message in messages %}
+ {% if category == 'error' %}
+ <div class="alert alert-danger alert-dismissible fade show" role="alert">
+     {{ message }}
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>
+ {% elif category == 'success' %}
+ <div class="alert alert-success alert-dismissible fade show" role="alert">
+     {{ message }}
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>
+ {% elif category == 'warning' %}
+ <div class="alert alert-warning alert-dismissible fade show" role="alert">
+     {{ message }}
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>
+ {% elif category == 'note' %}
+ <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+     {{ message }}
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>
+ {% endif %}
+ {% endfor %}
+ {% endif %}
+ {% endwith %}
+
+<div class="container">
+    <div class="col">
+      <h1 style="padding-top: 2%;"><div class="fw-bold">{{ movie.title }}</div></h1> In Theatres
+    </div>
+    <hr/>
+    <p><strong >Book your show</strong></p> 
+      <div class="container pt-4 pb-4">
+          <div class="row row-cols-auto">
+        {% for show in shows %}
+          <div class="card">
+            <div class="card-body">
+              {% if user.is_authenticated %}
+                {% if user.is_admin == false %}
+                  <h5 class="card-title1"><div ><a href="/book_ticket/{{ show.id }}" class="link-dark">{{ show.t }}</a></div></h5>
+                {% else %}
+                  <h5 class="card-title1"><div class="fw-bold">{{ show.t }}</div></h5>
+                {% endif %}
+              {% else %}
+                <h5 class="card-title1"><div ><a href="/book_ticket/{{ show.id }}" class="link-dark">{{ show.t }}</a></div></h5>   <!-- class="fw-bold" -->
+              {% endif %}
+                <p class="card-text">{{ show.address_t }}</p>
+              <p class="card-text">{{ show.datetime }}</p>
+              <hr/>
+              Cost <div class="fw-bold">{{ show.cost }} Rs</div>
+              
+            </div>
+            
+          </div>
+
+        {% endfor %}
+</div>
+</div>
+</div>
+{% endblock %}
