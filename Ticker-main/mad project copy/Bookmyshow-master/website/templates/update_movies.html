@@ -19,7 +19,7 @@ Update Movie Details
         </li>
         {% if user.is_authenticated %}
         <li class="nav-item">
-          {% if user.is_theatre_admin %}
+          {% if user.is_admin %}
             <a class="nav-link" href="/my_theaters">Theater</a>
             <a class="nav-link" href="/movies">Movies</a>
         </li>
